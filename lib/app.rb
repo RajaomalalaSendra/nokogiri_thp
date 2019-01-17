@@ -10,17 +10,18 @@ def all_bitcoin(symbole, price)
   # creating the array of price 
   prix = Array.new
   price.each do |txt|
-	  prix << txt.text
+    prix << txt.text
   end
-  prix = prix.delete("$")
   # create the array of symbol
   symbolic = Array.new
   symbole.each do |txt|
     symbolic << txt.text
   end
   # The hash of the prices and the symbol
+  new_array = Array.new
   table = Hash.new
   table = Hash[symbolic.zip(prix)]
-  return table
+  new_array.push(table)
+  return new_array
 end
-all_bitcoin(symbole, price)
+puts all_bitcoin(symbole, price)
