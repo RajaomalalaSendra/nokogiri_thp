@@ -6,18 +6,21 @@ require 'rubygems'
 page = Nokogiri::HTML(open('https://coinmarketcap.com/all/views/all/'))
 symbole = page.xpath('//td[@class="text-left col-symbol"]')
 price = page.xpath('//a[@class="price"]')
-
-# creating the array of price 
-prix = Array.new
-price.each do |txt|
-  prix << txt.text
+def all_bitcoin(symbole, price)
+  # creating the array of price 
+  prix = Array.new
+  price.each do |txt|
+	  prix << txt.text
+  end
+  prix = prix.delete("$")
+  # create the array of symbol
+  symbolic = Array.new
+  symbole.each do |txt|
+    symbolic << txt.text
+  end
+  # The hash of the prices and the symbol
+  table = Hash.new
+  table = Hash[symbolic.zip(prix)]
+  return table
 end
-# create the array of symbol
-symbolic = Array.new
-symbole.each do |txt|
-  symbolic << txt.text
-end
-# The hash of the prices and the symbol
-table = Hash.new
-table = Hash[symbolic.zip(prix)]
-puts table
+all_bitcoin(symbole, price)
